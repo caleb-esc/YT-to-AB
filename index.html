@@ -1,48 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hidden YouTube Video Generator</title>
+    <link rel="stylesheet" href="https://d3rtzzzsiu7gdr.cloudfront.net/assets/cssold/style.css" />
+    <link rel="stylesheet" href="https://d3rtzzzsiu7gdr.cloudfront.net/assets/cssold/settings.css" />
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: #181818;
+            color: #fff;
+            margin: 0;
+            padding: 0;
         }
-        textarea, input, button {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #FFB800;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .description {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        .input, .button {
+            padding: 15px;
+            font-size: 18px;
             width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            font-size: 16px;
+            margin: 10px 0;
+            border: 2px solid #444;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            transition: background-color 0.3s ease;
         }
-        #output {
-            margin-top: 20px;
-            word-wrap: break-word;
-            white-space: pre-wrap;
+        .button:hover, .input:focus {
+            background-color: #FFB800;
+            border-color: #FFB800;
+            outline: none;
         }
-        .cards {
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
+        .output-section {
+            margin-top: 30px;
+        }
+        .settings-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #FFB800;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .settings-button:hover {
+            background-color: #FFD700;
         }
     </style>
 </head>
 
 <body>
-    <h1>Hidden YouTube Video Generator</h1>
-    <p>Enter a YouTube URL below, and this tool will automatically convert it to an embed URL and open it in a new blank page.</p>
+    <div class="container">
+        <h1 class="title">Hidden YouTube Video Generator</h1>
+        <p class="description">Convert any YouTube URL into an embedded video and open it in a new blank tab.</p>
 
-    <input type="text" id="url" placeholder="Enter YouTube URL here" />
-    <button onclick="generateAndOpenPage()">Generate and Open</button>
+        <input type="text" id="url" class="input" placeholder="Enter YouTube URL here" />
+        <button class="button" onclick="generateAndOpenPage()">Generate and Open</button>
 
-    <h2>Generated Data URL</h2>
-    <textarea id="output" rows="6" readonly></textarea>
+        <div class="output-section">
+            <h2>Generated Data URL</h2>
+            <textarea id="output" rows="6" class="input" readonly></textarea>
+        </div>
 
-    <div class="cards">
-        <h3>Settings</h3>
-        <button onclick="openSettings()">Go to Settings</button>
+        <button class="settings-button" onclick="openSettings()">Go to Settings</button>
     </div>
 
     <script>
@@ -56,9 +97,9 @@
                     const videoId = urlObj.pathname.slice(1);
                     return `https://www.youtube.com/embed/${videoId}`;
                 }
-                return url; // Return the original URL if it's already an embed URL
+                return url;
             } catch {
-                return url; // Return the original URL if parsing fails
+                return url;
             }
         }
 
@@ -98,7 +139,6 @@
                 .catch(error => console.error('Error loading settings page:', error));
         }
 
-        // Optional: Add Enter key functionality for generating and opening the page
         document.getElementById('url').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 generateAndOpenPage();
@@ -106,5 +146,4 @@
         });
     </script>
 </body>
-
 </html>
