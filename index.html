@@ -42,7 +42,7 @@
 
     <div class="cards">
         <h3>Settings</h3>
-        <a href="settings.html">Go to Settings</a>
+        <button onclick="openSettings()">Go to Settings</button>
     </div>
 
     <script>
@@ -85,6 +85,17 @@
                 alert('An error occurred while generating the Base64 URL. Please check the input and try again.');
                 console.error('Error:', error);
             }
+        }
+
+        function openSettings() {
+            const newWindow = window.open('about:blank', '_blank');
+            fetch('settings.html')
+                .then(response => response.text())
+                .then(html => {
+                    newWindow.document.write(html);
+                    newWindow.document.close();
+                })
+                .catch(error => console.error('Error loading settings page:', error));
         }
 
         // Optional: Add Enter key functionality for generating and opening the page
