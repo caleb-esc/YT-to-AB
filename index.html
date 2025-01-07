@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>about:blank Preview | Hidden YouTube Video Generator</title>
-
+    <title>Hidden YouTube Video Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,17 +27,6 @@
             background-color: #f9f9f9;
             border: 1px solid #ddd;
         }
-        .cards-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .cards-button:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 
@@ -52,20 +40,9 @@
     <h2>Generated Data URL</h2>
     <textarea id="output" rows="6" readonly></textarea>
 
-    <!-- Settings for about:blank Cloaking -->
     <div class="cards">
-        <h3>about:blank Preview</h3>
-        <p>Open the website in about:blank. Will not show in search history</p>
-        <label class="switch">
-            <input type="checkbox" id="open_blank" />
-            <span class="slider"></span>
-        </label>
-        <button class="cards-button" id="blankoffbutton" style="outline: 0; border: 0; display: none">
-            Turn off Auto Blank
-        </button>
-        <button class="cards-button" id="blankonbutton" style="outline: 0; border: 0">
-            Turn On Auto Blank
-        </button>
+        <h3>Settings</h3>
+        <a href="settings.html">Go to Settings</a>
     </div>
 
     <script>
@@ -84,41 +61,6 @@
                 return url; // Return the original URL if parsing fails
             }
         }
-
-        let cloakingEnabled = false;
-
-        function handleVisibilityChange() {
-            if (document.hidden && cloakingEnabled) {
-                window.location.href = "about:blank";
-            }
-        }
-
-        function toggleCloaking(isEnabled) {
-            cloakingEnabled = isEnabled;
-            if (cloakingEnabled) {
-                document.addEventListener("visibilitychange", handleVisibilityChange);
-            } else {
-                document.removeEventListener("visibilitychange", handleVisibilityChange);
-            }
-        }
-
-        document.getElementById('open_blank').addEventListener('change', function () {
-            toggleCloaking(this.checked);
-        });
-
-        document.getElementById('blankonbutton').addEventListener('click', function () {
-            document.getElementById('open_blank').checked = true;
-            toggleCloaking(true);
-            document.getElementById('blankoffbutton').style.display = 'inline-block';
-            document.getElementById('blankonbutton').style.display = 'none';
-        });
-
-        document.getElementById('blankoffbutton').addEventListener('click', function () {
-            document.getElementById('open_blank').checked = false;
-            toggleCloaking(false);
-            document.getElementById('blankoffbutton').style.display = 'none';
-            document.getElementById('blankonbutton').style.display = 'inline-block';
-        });
 
         function generateAndOpenPage() {
             const inputUrl = document.getElementById('url').value.trim();
