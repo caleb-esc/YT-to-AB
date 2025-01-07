@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>about:blank</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>about:blank Preview | Hidden YouTube Video Generator</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,17 +22,26 @@
             word-wrap: break-word;
             white-space: pre-wrap;
         }
-        .settings-container {
-            margin-top: 20px;
+        .cards {
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
         }
-        .settings-container label {
-            font-weight: bold;
+        .cards-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
         }
-        .settings-container input {
-            margin-left: 10px;
+        .cards-button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
+
 <body>
     <h1>Hidden YouTube Video Generator</h1>
     <p>Enter a YouTube URL below, and this tool will automatically convert it to an embed URL and open it in a new blank page.</p>
@@ -41,15 +52,23 @@
     <h2>Generated Data URL</h2>
     <textarea id="output" rows="6" readonly></textarea>
 
-    <!-- Settings Menu for Tab Cloaking -->
-    <div class="settings-container">
-        <h3>Settings</h3>
-        <label for="enableCloaking">Enable Tab Cloaking:</label>
-        <input type="checkbox" id="enableCloaking" />
+    <!-- Settings for about:blank Cloaking -->
+    <div class="cards">
+        <h3>about:blank Preview</h3>
+        <p>Open the website in about:blank. Will not show in search history</p>
+        <label class="switch">
+            <input type="checkbox" id="open_blank" />
+            <span class="slider"></span>
+        </label>
+        <button class="cards-button" id="blankoffbutton" style="outline: 0; border: 0; display: none">
+            Turn off Auto Blank
+        </button>
+        <button class="cards-button" id="blankonbutton" style="outline: 0; border: 0">
+            Turn On Auto Blank
+        </button>
     </div>
 
     <script>
-        // Function to convert YouTube URL to Embed URL
         function convertToEmbedUrl(url) {
             try {
                 const urlObj = new URL(url);
@@ -66,7 +85,41 @@
             }
         }
 
-        // Function to generate and open the YouTube embed page
+        let cloakingEnabled = false;
+
+        function handleVisibilityChange() {
+            if (document.hidden && cloakingEnabled) {
+                window.location.href = "about:blank";
+            }
+        }
+
+        function toggleCloaking(isEnabled) {
+            cloakingEnabled = isEnabled;
+            if (cloakingEnabled) {
+                document.addEventListener("visibilitychange", handleVisibilityChange);
+            } else {
+                document.removeEventListener("visibilitychange", handleVisibilityChange);
+            }
+        }
+
+        document.getElementById('open_blank').addEventListener('change', function () {
+            toggleCloaking(this.checked);
+        });
+
+        document.getElementById('blankonbutton').addEventListener('click', function () {
+            document.getElementById('open_blank').checked = true;
+            toggleCloaking(true);
+            document.getElementById('blankoffbutton').style.display = 'inline-block';
+            document.getElementById('blankonbutton').style.display = 'none';
+        });
+
+        document.getElementById('blankoffbutton').addEventListener('click', function () {
+            document.getElementById('open_blank').checked = false;
+            toggleCloaking(false);
+            document.getElementById('blankoffbutton').style.display = 'none';
+            document.getElementById('blankonbutton').style.display = 'inline-block';
+        });
+
         function generateAndOpenPage() {
             const inputUrl = document.getElementById('url').value.trim();
             if (!inputUrl) {
@@ -82,7 +135,7 @@
 
                 document.getElementById('output').value = base64Url;
 
-                // Open the generated embed URL in a new blank page
+                // Open in a new blank page
                 const newWindow = window.open('about:blank', '_blank');
                 newWindow.document.write(atob(base64Url.split(',')[1]));
                 newWindow.document.close();
@@ -98,50 +151,7 @@
                 generateAndOpenPage();
             }
         });
-
-        // Function to handle the tab cloaking logic
-        let cloakingEnabled = false;
-
-        // Load the settings state from the checkbox
-        function loadSettings() {
-            const cloakingCheckbox = document.getElementById('enableCloaking');
-            cloakingEnabled = cloakingCheckbox.checked;
-
-            // Add the cloaking logic if enabled
-            if (cloakingEnabled) {
-                enableTabCloaking();
-            }
-        }
-
-        // Event listener for checkbox change
-        document.getElementById('enableCloaking').addEventListener('change', function() {
-            cloakingEnabled = this.checked;
-            if (cloakingEnabled) {
-                enableTabCloaking();
-            } else {
-                disableTabCloaking();
-            }
-        });
-
-        // Function to enable tab cloaking
-        function enableTabCloaking() {
-            document.addEventListener("visibilitychange", handleVisibilityChange);
-        }
-
-        // Function to disable tab cloaking
-        function disableTabCloaking() {
-            document.removeEventListener("visibilitychange", handleVisibilityChange);
-        }
-
-        // Handle the visibility change event
-        function handleVisibilityChange() {
-            if (document.hidden) {
-                window.location.href = "about:blank";
-            }
-        }
-
-        // Load the settings on page load
-        window.onload = loadSettings;
     </script>
 </body>
+
 </html>
