@@ -5,41 +5,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hidden YouTube Video Generator</title>
+
+    <!-- External stylesheets -->
     <link rel="stylesheet" href="https://d3rtzzzsiu7gdr.cloudfront.net/assets/cssold/style.css" />
     <link rel="stylesheet" href="https://d3rtzzzsiu7gdr.cloudfront.net/assets/cssold/settings.css" />
+    <link rel="stylesheet" href="https://d3rtzzzsiu7gdr.cloudfront.net/assets/cssold/library.css" />
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
             margin: 0;
             padding: 0;
-            background-color: #181818;
-            color: black; /* Set all text to black */
         }
 
+        /* Container for centering content */
         .container {
-            max-width: 800px;
+            width: 100%;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px;
+            text-align: center;
         }
 
+        /* Title styling */
         .title {
-            text-align: center;
-            font-size: 36px;
+            font-size: 40px;
             color: #FFB800;
             margin-bottom: 20px;
         }
 
+        /* Description text */
         .description {
-            text-align: center;
             font-size: 18px;
             margin-bottom: 40px;
         }
 
+        /* Input field and button styling */
         .input-section {
-            background-color: #000; /* Black background */
+            background-color: #222;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
+            border: 2px solid #444;
         }
 
         .input-section input,
@@ -50,16 +59,19 @@
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #444;
+            background-color: #333;
+            color: white;
         }
 
+        /* Input background and text color specific */
         .input-section input {
-            color: black; /* Input text color is black */
-            background-color: white; /* Input field background color is white */
+            background-color: #fff;
+            color: black;
         }
 
         .input-section button {
             background-color: #FFB800;
-            color: #333;
+            color: black;
             cursor: pointer;
         }
 
@@ -67,11 +79,13 @@
             background-color: #FFD700;
         }
 
+        /* Output section styling */
         .output-section {
-            background-color: #333;
+            background-color: #222;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 40px;
+            border: 2px solid #444;
         }
 
         .output-section h2 {
@@ -84,13 +98,14 @@
             height: 150px;
             padding: 10px;
             font-size: 16px;
+            background-color: #333;
+            color: white;
             border-radius: 5px;
             border: 1px solid #444;
-            background-color: #222;
-            color: black; /* Set text color in textarea to black */
             resize: none;
         }
 
+        /* Back to main button */
         .back-button {
             display: block;
             width: 200px;
